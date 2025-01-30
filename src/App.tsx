@@ -28,10 +28,11 @@ function App() {
     const { data, error } = await supabase
       .from("TodoList")
       .insert([newTodoData])
+      .select("*")
       .single();
 
     if (error) {
-      console.error("Error adding todo:", error);
+      console.log("Error adding todo: ", error);
     } else {
       setTodoList((prev) => [...prev, data]);
       setNewTodo("");
@@ -88,7 +89,6 @@ function App() {
             Add Todo Item
           </button>
         </div>
-
         <ul className="space-y-4">
           {todoList.map((todo) => (
             <li
