@@ -1,7 +1,11 @@
 import { Session } from "@supabase/supabase-js";
+import { dotWave } from "ldrs";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Background } from "./components/Background.";
 import { supabase } from "./supabase-client";
+
+dotWave.register();
 
 type Todo = {
   id: string;
@@ -62,6 +66,16 @@ function App() {
   const addTodo = async () => {
     if (!session) return;
 
+    const exists = todoList.some(
+      (todo) => todo.name.toLowerCase() === newTodo.toLowerCase()
+    );
+
+    if (exists) {
+      toast.error("Todo already exists!");
+      setNewTodo("");
+      return;
+    }
+
     const newTodoData = {
       name: newTodo,
       isCompleted: false,
@@ -76,9 +90,11 @@ function App() {
 
     if (error) {
       console.error("Error adding todo: ", error);
+      toast.error("Error adding todo");
     } else {
       setTodoList((prev) => [...prev, data]);
       setNewTodo("");
+      toast.success("Todo added successfully");
     }
   };
 
@@ -103,8 +119,10 @@ function App() {
     const { error } = await supabase.from("TodoList").delete().eq("id", id);
     if (error) {
       console.error("Error deleting todo:", error);
+      toast.error("Error deleting todo");
     } else {
       setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+      toast.success("Todo deleted successfully");
     }
   };
 
@@ -117,14 +135,12 @@ function App() {
       <Background />
       {isLoading ? (
         <div className="flex flex-col items-center justify-center h-full">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-3 border-white">
-            loading...
-          </div>
+          <l-dot-wave size="45" speed="0.5" color="white"></l-dot-wave>
         </div>
       ) : session ? (
         <div className="h-screen flex flex-col items-center justify-center py-8 px-4 relative">
           <h1 className="text-white text-2xl font-bold text-center">
-            Welcome {session.user.user_metadata.full_name}!
+            Welcome {session.user.user_metadata.name}!
           </h1>
           <img
             src={session.user.user_metadata.avatar_url}
