@@ -75,7 +75,7 @@ function App() {
       .single();
 
     if (error) {
-      console.log("Error adding todo: ", error);
+      console.error("Error adding todo: ", error);
     } else {
       setTodoList((prev) => [...prev, data]);
       setNewTodo("");
@@ -111,8 +111,6 @@ function App() {
   useEffect(() => {
     fetchTodoList();
   }, [session]);
-
-  console.log(session);
 
   return (
     <div className="h-screen w-screen">
