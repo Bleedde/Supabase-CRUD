@@ -185,7 +185,7 @@ function App() {
                   <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                     <button
                       onClick={() => completeTask(todo.id, todo.isCompleted)}
-                      className={`w-full sm:w-auto px-4 py-2 rounded-lg transition-colors ${
+                      className={`w-full sm:w-auto px-4 py-2 rounded-lg transition-colors cursor-pointer ${
                         todo.isCompleted
                           ? "bg-yellow-600 hover:bg-yellow-700 text-gray-100"
                           : "bg-green-600 hover:bg-green-700 text-gray-100"
@@ -195,7 +195,7 @@ function App() {
                     </button>
                     <button
                       onClick={() => deleteTodo(todo.id)}
-                      className="w-full sm:w-auto bg-red-600 text-gray-100 px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                      className="w-full sm:w-auto bg-red-600 text-gray-100 px-4 py-2 rounded-lg hover:bg-red-700 transition-colors cursor-pointer"
                     >
                       Delete
                     </button>
