@@ -140,7 +140,7 @@ function App() {
       ) : session ? (
         <div className="h-screen flex flex-col items-center justify-center py-8 px-4 relative">
           <h1 className="text-white text-2xl font-bold text-center">
-            Welcome {session.user.user_metadata.name}!
+            Welcome {session.user.user_metadata.name.split(" ")[0]}!
           </h1>
           <img
             src={session.user.user_metadata.avatar_url}
